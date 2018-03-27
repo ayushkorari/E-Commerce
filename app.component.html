@@ -1,0 +1,147 @@
+<div style="height:100%">
+  <div style="max-width:650px;margin:auto">
+    <nav mat-tab-nav-bar *ngIf="navBar==false">
+        
+        <b mat-tab-link style="text-decoration:none"
+           *ngFor="let link of navLinks"
+           [routerLink]="link"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive" [class.active]="rla.isActive" style="text-transform: capitalize;">
+         <b>{{link}}</b> 
+        </b>
+      </nav>
+    </div>    
+      
+<div class="container-fluid" style="top:0;position:fixed;width:100%;z-index:10;min-height:70px" *ngIf="navBar">
+
+  <nav class="navbar navbar-expand-md">
+        <a class="navbar-brand" [routerLink]="['/home']"><img src="http://www.logo-company.in/logo/196.jpg" style="width:100px;height:80px"></a>
+        <button style="background-color:white;color:black" class="navbar-toggler" 
+        type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="true" aria-label="Toggle navigation">
+        <mat-icon>view_headline</mat-icon>
+        </button>
+  
+     
+  
+      <div id="navbarSupportedContent" class="collapse navbar-collapse">
+          <ul class="navbar-nav  men-menu" *ngFor="let category of categories|category:0">
+              <li class="nav-item dropdown" style="justify-content:center">
+              <a  class="nav-link" href="#" id="navbardrop" data-toggle="dropdown" [routerLink]="category|route">
+                {{category.category_name.toLowerCase()}}
+              </a>
+              <div class="dropdown-menu " [@dropdown]="'in'" style="position:fixed;top:79px;width:100%;height:500px;transition: all 2s linear;overflow:auto">
+                <div class="container">
+                    <div class="table-responsive" style="width:100%" >
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td *ngFor="let subcat of categories|category:category._id"><dl>
+                          <dt><a [routerLink]="subcat|route:category.category_name.toLowerCase()">{{subcat.category_name.toLowerCase()}}</a></dt>
+                          <p>
+                          <dd  *ngFor="let sub of categories|category:subcat._id"><a [routerLink]="sub|route:category.category_name.toLowerCase()" >{{sub.category_name.toLowerCase()}}</a></dd>
+                        </p>
+                       
+                        </dl>
+                      </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              </div>
+            </li>
+            </ul>
+                       <ul class="navbar-nav searchbox" style="margin-left:5px;padding-top:5px">
+                  <li class="nav-item">
+                    <form class="form-inline">
+                      <mat-form-field  style="width:350px">
+                        <input matInput placeholder="Search Products">
+                      </mat-form-field>
+              </form>
+                  </li>    
+                </ul>
+          
+  
+              <ul class="navbar-nav profile-menu" style="margin:auto">
+                
+                    <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
+                  <mat-icon style="color:gray;font-size:200%">person</mat-icon><sup><mat-icon style="color:gray;padding:10px">arrow_drop_down</mat-icon></sup>
+                </a>
+                <div class="profile dropdown-menu dropdown-menu-right" *ngIf="!loggedIn" style="max-width:300px;height:150px;padding:10px;padding-left:10px">
+                  <dl>
+                    <dt>
+                      Your Account
+                    </dt>
+                    <dd>
+                      Login and manage your orders
+                    </dd>
+                    <dd>
+                        <a [routerLink]="['/login']"><button  type="button" style="width:130px;color:#526cd0;background-color:white;border:1px solid #526cd0;height:40px;border-radius:2px;cursor:pointer">
+                            <b style="padding:0px" >Login</b></button></a>
+                            <a [routerLink]="['/login']">    <button style="width:130px;color:#526cd0;background-color:white;border:1px solid #526cd0;height:40px;border-radius:2px;cursor:pointer">
+                                <b style="padding:0px">Register</b></button></a>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="profile dropdown-menu dropdown-menu-right" *ngIf="loggedIn" style="max-width:300px;max-height:350px;padding:10px">
+                  <dl>
+                    <dt>
+                        {{userName}}
+                    </dt>
+                    <dd>
+                      {{userEmail}}
+                    </dd>
+                    
+                  </dl>
+                  <hr>
+                  <dl>
+                      <dt>
+                          <a style="color:black"> My Account</a>
+                      </dt>
+                      <dd>
+                        <a  [routerLink]="['/wishlist']">Wishlist</a>
+                      </dd>
+                      <dd>
+                          <a>Orders</a>
+                        </dd>
+                        <dd>
+                            <a>Saved Cards</a>
+                          </dd>
+                          <dd>
+                              <a>Saved Addresses</a>
+                            </dd>
+                    </dl>
+                    <hr>
+                    <dl>
+                        <dt>
+                            <a style="color:black">Edit Profile</a>
+                        </dt>
+                        <dt>
+                            <a style="color:black" (click)="logout()">Log Out</a>
+                          </dt>
+                    </dl>
+                </div>
+              </li>
+                </ul>
+                <ul class="navbar-nav  ml-auto profile-menu" style="margin-right:50px">
+                    
+                        <li class="nav-item dropdown" style="padding:10px;margin-top:0px;cursor:pointer;color:gray">
+                    
+                            <a [routerLink]="['/cart']"><mat-icon>shopping_cart</mat-icon><sup style="color:white;border-radius:4px;background-color:#526cd0;font-size:18px;padding-left:5px;padding-right:5px" *ngIf="totalCartProducts>0">{{totalCartProducts}}</sup></a>
+                  </li>
+                    </ul>
+            
+      </div>
+      <!--/.nav-collapse -->
+  </nav>
+   
+</div>
+<div id="main-outlet"  (scroll)="onScroll($event)" [style.margin-top]="navBar?'80px':'0px'" style="position:fixed;width:100%;z-index:1;background-color:white;height:90%;overflow:auto"><router-outlet></router-outlet></div>
+<button (click)="topFunction()" id="myBtn" title="Go to top">Top</button>
+</div>  
+  
+
+<div style="background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);z-index:50;position:fixed;height:100%;width:100%" *ngIf="loading"><mat-spinner style="margin:auto;top:40%"  [diameter]="70" color="accent"></mat-spinner></div>

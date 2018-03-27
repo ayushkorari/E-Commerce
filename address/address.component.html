@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row" style="padding-top:50px;padding-bottom:50px">
+      <div class="col-sm-9">
+          <ul style="list-style-type:none">
+          <li *ngFor="let address of addresses" style="display:inline-block;margin-left:10px;margin-bottom:10px">
+              <div class="alert" style="width:300px;height:268px;overflow-x:hidden;background:#f4fdfb;border: 1px solid #b9f0e5;font-size:14px">
+                 <dl>
+                    <dt>
+                         {{address.name}} {{address.default?'(Default)':''}} <span style="margin-left:10px;background-color:#2cd2b1;padding:5px;border-radius:16px;color:white">{{address.type}}</span>   
+                    </dt>
+                    <br>
+                    <dd>{{address.address}}</dd>
+                    <dd>{{address.locality}}</dd>
+                    <dd>{{address.district}} - {{address.pincode}}</dd>
+                    <dd>{{address.state}}</dd>
+                    <dd>Mobile : {{address.mobile}}</dd>  
+                 </dl> 
+                 <hr>
+                 <span style="float:left;cursor:pointer"><b>Remove</b></span><span style="float:right;color:#526cd0;cursor:pointer"><b>Edit</b></span><br>
+                </div>
+           </li>
+           <li style="display:inline-block;margin-left:10px;margin-bottom:10px">
+
+              <div class="alert" style="width:300px;height:268px;overflow-x:hidden;background:#f4fdfb;border: 1px solid #b9f0e5;font-size:14px">
+                  
+                 <div style="display:table;height:100%;width:100%;cursor:pointer" (click)="showMenu = true"><a style="display:table-cell;vertical-align:middle;text-align:center;margin:auto;color:#2cd2b1"><b> <button mat-mini-fab style="margin-right:10px;color:#2cd2b1;border:1px solid #2cd2b1;background-color:white"><mat-icon>arrow_forward</mat-icon></button>New Address</b></a>  </div> 
+                 </div>
+          </li>
+           </ul>
+           <div style="background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);z-index:50;position:fixed;height:100%;width:100%;top:0px;left:0%;padding-top:10px" *ngIf="showMenu" [@modal]="'in'">
+              <mat-card style="max-width:500px;min-height:400px;margin:auto ;background-image: url('');text-align:center">
+                  <mat-card-subtitle>ADDRESS DETAILS</mat-card-subtitle>
+                  
+                  <form  [formGroup]="addressForm" #addForm=ngForm  (submit)="addForm.valid&&register()">
+                          
+                      
+                      <mat-form-field style="width:100%">
+                        <input formControlName="pincode" matInput placeholder="Pincode" required>
+                        <mat-error *ngIf="addressForm.controls.pincode.invalid"></mat-error>
+                      </mat-form-field><br>
+    
+    
+                    <mat-form-field style="width:100%">
+                        <input formControlName="locality" matInput placeholder="Locality" required>
+                        <mat-error *ngIf="addressForm.controls.locality.invalid"></mat-error>
+                    </mat-form-field><br>
+    
+    
+                    <mat-form-field style="width:100%">
+                        <input formControlName="district" matInput placeholder="City/District" required>
+                        <mat-error *ngIf="addressForm.controls.district.invalid"></mat-error>
+                    </mat-form-field><br>
+    
+    
+                    <mat-form-field style="width:100%">
+                        <input formControlName="state" matInput placeholder="State" required>
+                        <mat-error *ngIf="addressForm.controls.state.invalid"></mat-error>
+                    </mat-form-field><br>
+
+                    <mat-form-field style="width:100%">
+                      <input formControlName="name" matInput placeholder="Name" required>
+                      <mat-error *ngIf="addressForm.controls.name.invalid">{{addressForm.get('name').errors.pattern?'Invalid Name':addressForm.get('name').errors.required?' Name is required':''}}</mat-error>
+                  </mat-form-field><br>
+    
+                  <mat-form-field style="width:100%">
+                      <input formControlName="address" matInput placeholder="Address" required>
+                      <mat-error *ngIf="addressForm.controls.address.invalid">{{addressForm.get('address').errors.pattern?'Invalid Address':addressForm.get('address').errors.required?' Address is required':''}}</mat-error>
+                  </mat-form-field><br>
+    
+                  <mat-form-field style="width:100%">
+                      <input formControlName="mobile" matInput placeholder="Mobile" required>
+                      <mat-error *ngIf="addressForm.controls.mobile.invalid">{{addressForm.get('mobile').errors.pattern?'Invalid Mobile':addressForm.get('mobile').errors.required?' Mobile is required':''}}</mat-error>
+                  </mat-form-field><br>
+    
+                    <mat-radio-group formControlName="type">
+                        <mat-radio-button value="HOME">Home</mat-radio-button>
+                        <mat-radio-button value="OFFICE">Office</mat-radio-button>
+                        <mat-error *ngIf="addressForm.controls.type.invalid&&(addressForm.controls.type.dirty||addressForm.controls.type.touched||addForm.submitted)">Select a gender</mat-error>
+                    </mat-radio-group>
+                  
+                  <br>
+                  <button mat-raised-button type="button" (click)="showMenu = false;addressForm.reset()" color="primary" style="background-color:#d9d9d9;width:150px;height:40px;color:black;margin-right:20px"><b>CANCEL</b></button>
+                    <button mat-raised-button type="submit" color="primary" style="background-color:#3f51b5;width:150px;height:40px;margin-left:20px"><b>SAVE</b></button>
+                    
+                 </form>
+               </mat-card>
+           </div>
+           
+      </div>
+      <div class="col-sm-3">
+      </div>
+    </div>
+</div>

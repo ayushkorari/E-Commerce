@@ -1,0 +1,85 @@
+
+  <nav class="navbar navbar-expand-md">
+      <a class="navbar-brand"  [routerLink]="['/',{ outlets: { header: ['sec-header'] } }]"><img src="http://www.logo-company.in/logo/196.jpg" style="width:100px;height:80px"></a>
+      <button style="background-color:white;color:black" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="true" aria-label="Toggle navigation">
+                  <mat-icon>view_headline</mat-icon>
+                </button>
+
+   
+
+    <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav  men-menu" *ngFor="let category of categories|category:0">
+            <li class="nav-item dropdown" style="justify-content:center">
+            <a  class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
+              {{category.category_name}}
+            </a>
+            <div class="dropdown-menu " style="position:fixed;top:79px;width:100%;height:500px;transition: all 1s ease-out;overflow:auto">
+              <div class="container">
+                  <div class="table-responsive" style="width:100%" >
+                <table style="width:100%" class="table">
+                  <tbody>
+                    <tr>
+                      <td *ngFor="let subcat of categories|category:category._id"><dl>
+                        <dt>{{subcat.category_name}}</dt>
+                        <p>
+                        <dd  *ngFor="let sub of categories|category:subcat._id">{{sub.category_name}}</dd>
+                      </p>
+                     
+                      </dl>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </div>
+          </li>
+          </ul>
+                     <ul class="navbar-nav searchbox" style="margin-left:5px;padding-top:5px">
+                <li class="nav-item">
+                  <form class="form-inline">
+                    <mat-form-field  style="width:350px">
+                      <input matInput placeholder="Search Products">
+                    </mat-form-field>
+            </form>
+                </li>    
+              </ul>
+        
+
+            <ul class="navbar-nav profile-menu" style="margin:auto">
+              
+                  <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Dropdown link
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" style="max-width:300px;height:150px;padding:10px">
+                <dl>
+                  <dt>
+                    Your Account
+                  </dt>
+                  <dd>
+                    Login and manage your orders
+                  </dd>
+                  <dd>
+                      <button [routerLink]="['login']" style="width:130px;color:#526cd0;background-color:white;border:1px solid #526cd0;height:40px;border-radius:2px;cursor:pointer">
+                          <b style="padding:0px" >Login</b></button>
+                          <button style="width:130px;color:#526cd0;background-color:white;border:1px solid #526cd0;height:40px;border-radius:2px;cursor:pointer">
+                              <b style="padding:0px">Register</b></button>
+                  </dd>
+                </dl>
+              </div>
+            </li>
+              </ul>
+              <ul class="navbar-nav  ml-auto profile-menu" style="margin-right:50px">
+                  
+                      <li class="nav-item dropdown" style="padding:10px;margin-top:0px;cursor:pointer;color:gray">
+                  
+                          <a [routerLink]="['cart']"><mat-icon>shopping_cart</mat-icon></a>
+                </li>
+                  </ul>
+          
+    </div>
+    <!--/.nav-collapse -->
+</nav>
+ 

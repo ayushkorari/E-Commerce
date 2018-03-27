@@ -1,0 +1,51 @@
+
+
+  
+<div id="demo" style="margin-top:10px;max-height:540px;overflow:hidden" class="carousel slide container-fluid" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="http://localhost:3000/ny.jpg" alt="Los Angeles" style="max-width:100%;max-height:540px">
+      <div class="carousel-caption">
+        <h3>Los Angeles</h3>
+        <p>We had such a great time in LA!</p>
+      </div>   
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:3000/la.jpg" alt="Chicago" style="max-width:100%;max-height:540px" >
+      <div class="carousel-caption">
+        <h3>Chicago</h3>
+        <p>Thank you, Chicago!</p>
+      </div>   
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:3000/chicago.jpg" alt="New York" style="max-width:100%;max-height:540px">
+      <div class="carousel-caption">
+        <h3>New York</h3>
+        <p>We love the Big Apple!</p>
+      </div>   
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>  
+
+  
+  
+    <a  [routerLink]="'all'|route:null:{added_on:-1}:null" style="text-decoration:none"><h3 style="text-align:center;margin-top:50px;cursor:pointer"><p style="color:white;background-color:#4dffdb;padding:5px;border-radius:6px;width:300px;margin:auto">LATEST PRODUCTS</p></h3></a>
+    <app-home-page-products [men]="latestProducts.men| slice:0:latestProducts.men.length" [women]="latestProducts.women| slice:0:latestProducts.women.length" [sort]="{added_on:-1}"></app-home-page-products>
+    
+    <a [routerLink]="'all'|route:null:{total_sold:-1}:null" style="text-decoration:none" ><h3 style="text-align:center;margin-top:50px;cursor:pointer" ><p style="color:white;background-color:#ff9966;padding:5px;border-radius:6px;width:300px;margin:auto">POPULAR PRODUCTS</p></h3></a>
+    <app-home-page-products [men]="popularProducts.men| slice:0:popularProducts.men.length" [women]="popularProducts.women| slice:0:popularProducts.women.length"  [sort]="{total_sold:1}"></app-home-page-products>
+
+    <a [routerLink]="'all'|route:null:{discount_percent:-1}:null" style="text-decoration:none"  ><h3 style="text-align:center;margin-top:50px;cursor:pointer" ><p style="color:white;background-color:#66d9ff;padding:5px;border-radius:6px;width:300px;margin:auto">TOP OFFERS</p></h3></a>
+    <app-home-page-products [men]="topOffersProducts.men| slice:0:topOffersProducts.men.length" [women]="topOffersProducts.women| slice:0:topOffersProducts.women.length" [sort]="{discount_percent:-1}"></app-home-page-products>
+    <app-footer></app-footer>

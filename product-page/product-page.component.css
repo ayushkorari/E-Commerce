@@ -1,0 +1,209 @@
+
+div.card
+{
+    transition: box-shadow .3s;margin-bottom:10px;cursor:pointer;border :1px solid white ;height:332px;width:180px;margin-left:auto;margin-right:auto;position:relative;
+}
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.card:hover,.card:focus
+{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border : 1px solid lightgray
+}
+.card:hover .card-body
+{
+    display:none
+}
+.card:hover .size
+{
+    display:block
+}
+.example-radio-group {
+    display: inline-block;font-size:12px;padding:1px
+    
+  }
+  .example-radio-button {
+    margin: 1px;
+  }
+  
+.size
+{
+    text-align:center;
+    background-color:white;padding:2px;height:100%;width:100%;margin-top:1px;
+    overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   font-size: 13px;
+   font-weight: 200;
+   line-height: 14px;
+   color: #282c3f;
+   text-transform: capitalize;
+   display:none;
+}
+.card-body
+{
+   text-align:center;
+   background-color:white;padding:2px;height:100%;width:100%;margin-top:1px;
+   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 200;
+  line-height: 14px;
+  color: #282c3f;
+  text-transform: capitalize;
+}
+div.card-title
+{
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 14px;
+    color: #282c3f;
+    text-transform: capitalize;
+  text-align:center;overflow: hidden;
+  text-overflow: ellipsis;margin:2px;margin-left:auto;margin-right:auto;
+  white-space: nowrap;
+}
+ div.product-name
+{
+    color: #3e4152;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+  text-align:center;overflow: hidden;
+  text-overflow: ellipsis;margin:2px;margin-left:auto;margin-right:auto;
+  white-space: nowrap;
+}
+div.product-price
+{
+    font-size: 12px;
+    font-weight: 500;
+    color: #282c3f;
+  margin-top:5px;
+  text-align:center;overflow: hidden;
+  text-overflow: ellipsis;margin:2px;margin-left:auto;margin-right:auto;
+  white-space: nowrap
+}
+
+.col-md-2
+{
+    padding-right:0px;margin-bottom:10px;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+    text-align: center;
+   
+}
+.price
+{
+    text-decoration: line-through;margin-left:2px;margin-right:2px
+}
+.discount
+{
+    color:#ff5722
+}
+.internal
+{
+    padding-top:10px;
+}
+.external
+{
+    margin-bottom:50px
+}
+
+.size-button
+{
+    text-align:center;font-size:12px;margin:3px;color:gray;background-color:white;border:1px solid lightgray;
+}
+
+.size-button:hover
+{
+   color:#3f51b5;border:1px solid #3f51b5;
+}
+span.more-brands-span
+{
+    color:#3f51b5;
+}
+span.more-brands-span:hover
+{
+  text-decoration: underline;cursor:pointer
+}
+.dropdown-menu
+{
+    margin-top:-1px
+}
+.dropdown:hover .dropdown-menu
+{
+    display: block;
+}
+.dropdown-menu:hover  .dropdown-menu
+{
+    display:block
+}
+.modal2 {
+    
+     position: fixed; /* Stay in place */
+     z-index: 1; /* Sit on top */
+     padding-top: 50px; /* Location of the box */
+     left: 0;
+     top: 85px;
+     width: 100%; /* Full width */
+     height: 70%; /* Full height */
+     overflow: auto; /* Enable scroll if needed */
+    
+ }
+ .modal-content2 {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 90%;
+	height: 90%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop1;
+    animation-duration: 0.4s;z-index: 10;
+}
+.modal-footer2 {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+.modal-header2 {
+    padding: 2px 16px;
+    background-color: #369;
+    color: white;
+	height:30px;
+}
+
+.modal-body2 {padding: 2px 16px;
+height:90%;
+width:100%;
+overflow:auto
+}
+a{
+    cursor: pointer;
+}
+.product-page-link:hover
+{
+    text-decoration: none;
+}

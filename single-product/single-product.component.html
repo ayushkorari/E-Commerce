@@ -1,0 +1,37 @@
+<div id="snackbar"></div>
+<a [routerLink]="product|productRoute">
+<div class="card">
+    <img class="card-img-top" src="http://localhost:3000/{{product.images[0]}}" alt="Card image" style="width:100%;height:240px;margin-bottom:0px">
+    <div class="card-body">
+         
+             <div class="card-title" ><strong>{{product.brand}}</strong></div>
+             <div class="product-name">{{product.name}}</div>
+             <div class="product-price"><strong>Rs. {{product.price*(100-product.discount_percent)/100}}</strong><span class="price"> Rs. {{product.price}} </span><span class="discount"> {{product.discount_percent}}% off</span></div>
+                        
+     </div>
+    <div class="size">
+      <div style="width:103%;height:30px;margin-top:-2px;margin-left:-2px;margin-right:-2px;padding:0px">
+
+       <div class="float-left" style="color:black;background-color:#d9d9d9;padding:2px;text-align:center;padding-top:10px;font-size:12px;border-right:1px solid lightgray;width:50%;cursor:pointer;height:100%" (click)="$event.preventDefault();$event.stopPropagation();wishlist?removeFromWishlist():saveToWishlist()"><strong>{{wishlist?"REMOVE":"SAVE"}}</strong></div>
+       <div class="float-right" style="color:white;background-color:#80ccff;padding:2px;text-align:center;padding-top:10px;font-size:12px;width:50%;cursor:pointer;height:100%" [matMenuTriggerFor]="Menu2" (click)="$event.preventDefault();$event.stopPropagation();"><strong>{{wishlist?"MOVE":"ADD"}} TO BAG</strong></div>
+       
+       
+       <mat-menu #Menu2="matMenu" [overlapTrigger]="false" yPosition="above" xPosition="before" class="size-menu">
+         <div style="width:178px;min-height:100px;justify-content:center">
+         <h6 style="text-align:center">Select Size</h6>
+         <p style="text-align:center">
+         <button  *ngFor="let size of product.size_quantity" mat-mini-fab class="size-button" (click)="addToBag(size.size)">{{size.size}}</button>
+       </p>
+       </div>
+         </mat-menu> 
+
+
+
+
+
+     </div>
+       <div class="product-price"><strong>Rs. {{product.price*(100-product.discount_percent)/100}}</strong><span class="price">  Rs. {{product.price}}  </span><span class="discount"> {{product.discount_percent}}% off</span></div>
+       <div style="margin-top:10px;color:gray;font-size:12px"><strong style="color:black">Size:</strong><span *ngFor="let size of product.size_quantity;let i=index"> {{size.size}}{{i==product.size_quantity.length-1?'':','}} </span> </div>
+    </div>
+</div>
+</a>

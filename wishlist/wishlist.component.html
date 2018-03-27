@@ -1,0 +1,14 @@
+<div id="snackbar"></div>
+<div class="container" *ngIf="products.length>0" style="margin-top:50px;min-height:600px">
+    
+  <div style="width:100%;margin:auto">
+      <h3 style="text-align:center;margin-bottom:50px"><span style="color:white;background-color:#66d9ff;padding:5px;border-radius:6px;width:400px">My Wishlist</span></h3>
+    <ul style="list-style-type:none" [style.margin-left]="isMobileDevice()?'50px':''">
+        
+             <li *ngFor="let product of products;let i=index" style="display:inline-block;margin-left:10px;margin-bottom:10px">
+                <app-single-product [product]="product" [wishlist]="true" (productAdded)="productAddedToCart(i,$event)"></app-single-product>
+             </li>
+          </ul>
+        </div>
+</div>
+<app-footer></app-footer>

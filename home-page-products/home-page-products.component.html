@@ -1,0 +1,38 @@
+<div class='container-fluid external'>
+    <div class="row">
+  <mat-tab-group class="col-xl-12">
+    <mat-tab label="Men">
+      <div class="container-fluid">
+          <div class="row internal">
+
+              <div *ngFor="let product of men;let i = index" class="col-xl-2 col-lg-3 col-mat-4 col-sm-6 col-xs-12 product" style="padding-bottom:10px">
+                  <app-single-product [product]="product"></app-single-product>
+              </div>
+              <div class="col-xl-2 col-lg-3 col-mat-4 col-sm-6 col-xs-12 product" style="margin-left:auto;margin-right:auto;width:200px; height:300px;display: table;padding-bottom:10px;border:1px solid #526cd0;border-radius:8px">
+                  <a [routerLink]="men|route:'men':sort:1" style="display:table-cell;vertical-align:middle;text-align:center;margin:auto;color:#526cd0"><h4> <button mat-mini-fab style="margin-right:10px;color:#526cd0;border:1px solid #526cd0;background-color:white"><mat-icon>arrow_forward</mat-icon></button>Explore All</h4></a>  
+                  </div>
+            </div>
+      </div>
+      </mat-tab>
+      <mat-tab label="Women">
+        <div class="container-fluid">
+            <div class="row internal">
+  
+                <div *ngFor="let product of women;let i = index" class="col-xl-2 col-lg-3 col-mat-4 col-sm-6 col-xs-12 product" style="padding-bottom:10px">
+                  
+                  
+                      <app-single-product [product]="product"></app-single-product>
+                  
+                
+                </div>
+                <div class="col-xl-2 col-lg-3 col-mat-4 col-sm-6 col-xs-12 product" style="margin-left:auto;margin-right:auto;width:200px; height:300px;display: table;padding-bottom:10px;border:1px solid #526cd0">
+                    <a [routerLink]="women|route:'women':sort:2" style="display:table-cell;vertical-align:middle;text-align:center;margin:auto;color:#526cd0"><h4> <button mat-mini-fab style="margin-right:10px;color:#526cd0;border:1px solid #526cd0;background-color:white"><mat-icon>arrow_forward</mat-icon></button>Explore All</h4></a>  
+                    </div>
+              </div>
+        </div>
+        </mat-tab>
+    </mat-tab-group>
+  </div>
+  </div>
+  
+  

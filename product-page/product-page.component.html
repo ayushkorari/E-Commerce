@@ -1,0 +1,218 @@
+<div style="width:100%;height:100%;position:absolute;z-index:200;background-color:white" *ngIf="products.length==0"></div>
+
+  <mat-menu #brandMenu="matMenu" [overlapTrigger]="false" yPosition="above" >
+    <div style="color:gray;max-width:500px;padding:10px">
+      <h5 style="text-align:center;color:gray">SELECT BRANDS</h5>
+      <form class="form-inline">
+        <mat-form-field  style="width:350px">
+          <input matInput placeholder="Search Brands" (click)="$event.stopPropagation();" #searchBrand>
+        </mat-form-field>
+</form>
+        <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+            <li *ngFor="let brand of brands|brandSearch:searchBrand.value"  style="display:inline-block;min-width:120px">  
+                <mat-checkbox [(ngModel)]="brand.checked" color="primary" (change)="changeBrands()"><span style="font-size:14px">{{brand.brand_name}}</span></mat-checkbox>
+            </li> 
+        </ul>
+        <p style="text-align:center">
+          
+                    <button mat-raised-button style="box-shadow:none;background-color:white;color:#526cd0;border:1px solid #526cd0;">Apply</button>
+                </p>
+    </div>
+</mat-menu>    
+<mat-menu #colorMenu="matMenu" [overlapTrigger]="false" yPosition="above" >
+  <div style="color:gray;max-width:300px;padding:10px">
+    <h5 style="text-align:center;color:gray">SELECT COLORS</h5>
+    <form class="form-inline">
+      <mat-form-field  style="width:250px">
+        <input matInput placeholder="Search Colors" (change)="changeColors()" #searchColor>
+      </mat-form-field>
+</form>
+      <!-- <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+          <li *ngFor="let color of colors|brandSearch:searchColor.value"  style="display:inline-block;min-width:120px">  
+              <mat-checkbox color="primary" (click)="$event.stopPropagation();"><span style="font-size:14px;text-transform:capitalize">{{color}}</span></mat-checkbox>
+          </li> 
+      </ul> -->
+      <span *ngFor="let color of colors|brandSearch:searchColor.value;let i = index">
+        <button mat-mini-fab [style.background-color]="color.color_name" (click)="color.checked = !color.checked;changeColors()"  matTooltip="{{color.color_name}}" [matTooltipPosition]="'after'" style="margin:auto;margin-bottom:10px"><span *ngIf="color.checked" style="color:white">&#10004;</span></button>
+        </span>
+  </div>
+</mat-menu>
+<mat-menu #catMenu="matMenu" [overlapTrigger]="false" yPosition="above" >
+  <div style="color:gray;max-width:600px;padding:10px">
+    <h5 style="text-align:center;color:gray">SELECT CATEGORIES</h5>
+    <form class="form-inline">
+      <mat-form-field  style="width:350px">
+        <input matInput placeholder="Search Categories" (click)="$event.stopPropagation();" #searchCategory>
+      </mat-form-field>
+</form>
+      <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+          <li *ngFor="let category of categories|brandSearch:searchCategory.value"  style="display:inline-block;min-width:120px">  
+              <mat-checkbox [(ngModel)]="category.checked" color="primary" style="width:300px;" (change)="changeCategories()"><span style="font-size:14px;text-transform: capitalize">{{category.category_name.toLowerCase()}}</span></mat-checkbox>
+          </li> 
+      </ul>
+      <p style="text-align:center">
+        
+                  <button mat-raised-button style="box-shadow:none;background-color:white;color:#526cd0;border:1px solid #526cd0;">Apply</button>
+              </p>
+  </div>
+</mat-menu>  
+
+<div class="container-fluid" style="padding-top:20px;padding-bottom:20px;max-width:1100px">
+
+      
+<!-- <mat-slide-toggle style="margin-top:10px" *ngIf="isMobileDevice()" color="primary" [(ngModel)]="showFilters"><b>{{showFilters?'Hide':'Show'}} Filters</b></mat-slide-toggle>   -->
+
+<span style="padding:5px;width:150px;color:white;background-color:#3f51b5;position:absolute;padding-top:5px;text-align:center;border-radius:5px"><b>{{productCounts}} Products</b></span>
+  <div class="dropdown float-right" style="margin-bottom:20px">
+      <button  class="btn dropdown-toggle" style="background-color:#3f51b5;color:white;cursor:pointer;font-size:14px"  data-toggle="dropdown">Sort By{{sortBy?.value?' : '+sortBy.value+' ':''}}</button> 
+      <div class="dropdown-menu">
+        <a class="dropdown-item" *ngFor="let sort of sortingArray" (click)="sortBy=sort;changeSorting()">{{sort.value}}</a>
+        
+      </div>
+    </div>
+       
+  <div class="table-responsive" style="width:100%">
+  <table style="width:100%" class="table">
+  <tbody>
+  <tr style="width:100%">
+  <td style="width:20%;background-color:white;border-right:1px solid lightgray;transition: 0.5s"  valign="top" *ngIf="showFilters" [@filters]="'in'">
+      <div *ngIf="genders.length>1">
+          <b style="color:gray">
+            Gender  
+            </b> 
+            <br> 
+            <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+                      <li *ngFor="let gender of genders;let i = index">  
+                          <mat-checkbox  [disabled]="genders.length<2" [(ngModel)]="gender.checked" color="primary" *ngIf="i<=7" (change)="changeGenders()"><span style="font-size:14px;text-transform: capitalize">{{gender.gender_name.toLowerCase()}}</span></mat-checkbox>
+                  </li> 
+                  </ul>
+                  <span class="more-brands-span" (click)="showMenu=true;menuFor='category'" *ngIf="genders.length>8" >+ {{genders.length-8}} More</span>
+                  <hr></div>
+    <div *ngIf="categories.length>0">
+    <b style="color:gray">
+      Category  
+      </b> 
+      <br> 
+      <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+                <li *ngFor="let category of categories;let i = index">  
+                    <mat-checkbox  [disabled]="categories.length<2" [(ngModel)]="category.checked" color="primary" *ngIf="i<=7" (change)="changeCategories()"><span style="font-size:14px;text-transform: capitalize">{{category.category_name.toLowerCase()}}</span></mat-checkbox>
+            </li> 
+            </ul>
+            <span class="more-brands-span" (click)="showMenu=true;menuFor='category'" *ngIf="categories.length>8" >+ {{categories.length-8}} More</span>
+            <hr></div>
+  <b style="color:gray">
+  Brand  
+  </b> 
+  <br> 
+  <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+            <li *ngFor="let brand of brands;let i = index">  
+                <mat-checkbox color="primary" [disabled]="brands.length<2" [(ngModel)]="brand.checked" *ngIf="i<=7" (change)="changeBrands()"><span style="font-size:14px">{{brand.brand_name}}</span></mat-checkbox>
+        </li> 
+        </ul>
+        <span class="more-brands-span" (click)="showMenu=true;menuFor='brand'" *ngIf="brands.length>8" >+ {{brands.length-8}} More</span>
+        <hr>
+        <b style="color:gray;margin-bottom:30px">
+          Color  
+          </b> 
+          <br> 
+          <span *ngFor="let color of colors;let i = index">
+          <button mat-mini-fab  [style.background-color]="color.color_name" *ngIf="i<=7" matTooltip="{{color.color_name}}" [matTooltipPosition]="'after'" style="margin:auto;margin-bottom:10px" (click)="colors.length>=2&&color.checked = !color.checked;colors.length>=2&&changeColors()"><span *ngIf="color.checked" style="color:white">&#10004;</span></button>
+          </span>
+    
+          <br>
+          <span class="more-brands-span" *ngIf="colors.length>8" (click)="showMenu=true;menuFor='color'">+ {{colors.length-8}} More</span>
+          <hr>
+        <b style="color:gray">Price</b>
+        <br>
+        <div style="margin-left:-5px;width:100%" *ngIf="priceRange[0]!=priceRange[1]"><nouislider [connect]="true" [min]="priceRange[0]" [max]="priceRange[1]"  [(ngModel)]="priceRange1" [step]="1" (ngModelChange)="updatePriceRange($event)" #slider></nouislider></div>
+        <span style="float:left">Rs. {{priceRange1[0]}}</span>
+        <span style="float:right" *ngIf="priceRange[0]!=priceRange[1]">Rs. {{priceRange1[1]}}</span>
+        <br><hr>
+        <b style="color:gray">Discount %</b>
+        <br>
+        <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+            <li  *ngFor="let discount of discounts">  
+                <mat-checkbox color="primary" [disabled]="discounts.length<2" (change)="changeDiscounts()" [(ngModel)]="discount.checked"><span style="font-size:14px">{{discount.value-10}} - {{discount.value}}</span></mat-checkbox>
+        </li> 
+        </ul>
+  </td>
+  <td style="background-color:white;overflow:auto;max-height:600px" [style.width]="showFilters?'80%':'100%'">
+  <ul style="list-style-type:none">
+    
+         <li *ngFor="let product of products" style="display:inline-block;margin-left:10px;margin-bottom:10px">
+            <app-single-product [product]="product"></app-single-product>
+         </li>
+      </ul>
+      <p style="text-align:center">
+
+          <button mat-raised-button *ngIf="loadMore" style="box-shadow:none;background-color:white;color:#526cd0;border:1px solid #526cd0;" (click)="loadMoreProducts()">Load More Products ({{productCounts-products.length}})</button>
+      </p>
+      
+     
+  </td>
+  </tr>
+  </tbody>
+  </table>
+  <hr style="margin-top:-15px">
+  </div>
+  </div>
+  <div style="background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);z-index:50;position:fixed;height:100%;width:100%;top:50px" *ngIf="showMenu" [style.padding-left]="!isMobileDevice()?'60px':''" [style.padding-right]="!isMobileDevice()?'50px':''"  [@modal]="'in'">
+  <div style="height:84%;position:fixed;z-index:5;top:90px;background-color:white;    box-sizing: border-box;
+    box-shadow: 0 1px 8px rgba(0,0,0,.1);
+    background: #fff;
+    border: 1px solid #eaeaec;padding:10px;overflow:auto"  *ngIf="menuFor=='brand'"  [style.width]="isMobileDevice()?'100%':'40%'"  [style.left]="isMobileDevice()?'':'30%'">
+	<span class="close" (click)="showMenu=false">&times;</span><br>
+	
+      <form class="form-inline" style="margin:auto">
+        <mat-form-field  style="width:350px;float:center;margin:auto" [floatLabel]="'always'">
+          <input matInput autofocus placeholder="Search Brands" (click)="$event.stopPropagation();" #searchBrand>
+        </mat-form-field>
+</form>
+        <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+            <li *ngFor="let brand of brands|brandSearch:searchBrand.value"  style="display:inline-block;" [style.min-width]="isMobileDevice()?'175px':'250px'">  
+                <mat-checkbox [(ngModel)]="brand.checked" color="primary" (change)="changeBrands()"><span style="font-size:14px">{{brand.brand_name}}</span></mat-checkbox>
+            </li> 
+        </ul>
+        
+</div>
+  
+    <div style="height:84%;position:fixed;z-index:15;top:90px;background-color:white;    box-sizing: border-box;
+    box-shadow: 0 1px 8px rgba(0,0,0,.1);
+    background: #fff;
+    border: 1px solid #eaeaec;padding:10px" *ngIf="menuFor=='color'" [style.width]="isMobileDevice()?'100%':'40%'" [style.left]="isMobileDevice()?'':'30%'">
+	<span class="close" (click)="showMenu=false">&times;</span><br>
+	
+      <form class="form-inline">
+      <mat-form-field  style="width:350px;margin:auto" [floatLabel]="'always'">
+        <input matInput autofocus placeholder="Search Colors"  #searchColor>
+      </mat-form-field>
+</form>
+<div style="margin:auto" [style.width]="isMobileDevice()?'100%':'50%'">
+      <span *ngFor="let color of colors|brandSearch:searchColor.value;let i = index">
+        <button mat-mini-fab [style.background-color]="color.color_name" (click)="color.checked = !color.checked;changeColors()"  matTooltip="{{color.color_name}}" [matTooltipPosition]="'after'" style="margin:auto;margin-bottom:10px"><span *ngIf="color.checked" style="color:white">&#10004;</span></button>
+        </span>
+</div>     
+</div>
+
+  <div style="height:84%;position:fixed;z-index:5;top:90px;background-color:white;    box-sizing: border-box;
+    box-shadow: 0 1px 8px rgba(0,0,0,.1);
+    background: #fff;
+    border: 1px solid #eaeaec;padding:10px;overflow:auto" *ngIf="menuFor=='category'" [style.width]="isMobileDevice()?'100%':'40%'" [style.left]="isMobileDevice()?'':'30%'">
+	<span class="close" (click)="showMenu=false">&times;</span><br>
+	
+      <form class="form-inline">
+      <mat-form-field  style="width:350px;margin:auto" [floatLabel]="'always'">
+        <input matInput autofocus placeholder="Search Categories" (click)="$event.stopPropagation();" #searchCategory>
+      </mat-form-field>
+</form>
+      <ul style="list-style-type:none;margin-top:10px;padding:0px;margin-bottom:0px">
+          <li *ngFor="let category of categories|brandSearch:searchCategory.value"  style="display:inline-block" [style.min-width]="isMobileDevice()?'175px':'250px'">  
+              <mat-checkbox [(ngModel)]="category.checked" color="primary" style="margin:5px" (change)="changeCategories()"><span style="font-size:14px;text-transform: capitalize">{{category.category_name.toLowerCase()}}</span></mat-checkbox>
+          </li> 
+      </ul>
+        
+</div>
+  
+  </div>
+  
+  <app-footer></app-footer>

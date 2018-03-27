@@ -1,0 +1,97 @@
+<div id="snackbar"></div>
+<div class="container-fluid" style="padding-top:20px;padding-bottom:50px;background-color:#b3ecff;min-height:600px">
+    <mat-card style="max-width:500px;min-height:400px;margin:auto ;background-image: url('');text-align:center">
+    <mat-tab-group (selectedTabChange)="resetTabs()">
+    <mat-tab label="LOG IN" *ngIf="!forgetPassword"><br>
+       
+        <form [formGroup]="loginForm" #logForm=ngForm (submit)="logForm.valid&&login();logForm.submitted=false">
+         <mat-card-subtitle>EASILY USING</mat-card-subtitle>
+         <button mat-button style="border:1px solid #526cd0;border-radius:4px;background-color:white;width:160px;margin-top:5px"><i class="fa fa-facebook-square" style="font-size:30px;color:#3B5998;margin-right:20px"></i> FACEBOOK</button>
+         <button mat-button style="border:1px solid #526cd0;border-radius:4px;background-color:white;width:160px;margin-top:5px"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Google-favicon-2015.png/150px-Google-favicon-2015.png" style="width:25px;height:25px;margin-right:30px"> GOOGLE</button><br><br>
+         <mat-card-subtitle>-OR USING EMAIL-</mat-card-subtitle>
+                       <mat-form-field style="width:100%">
+                        <input matInput placeholder="Enter your email" formControlName="email" required>
+                        
+                        <mat-error *ngIf="loginForm.controls.email.invalid">{{authenticateEmail(loginForm.controls.email)}}</mat-error>
+                      </mat-form-field><br>
+                      <mat-form-field style="width:100%">
+                        <input #input maxlength="10"  formControlName="password"  matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'"  required>
+                        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                        <mat-error *ngIf="loginForm.controls.password.invalid">{{authenticatePassword(loginForm.controls.password)}}</mat-error>
+                      </mat-form-field><br><br>
+                      <button mat-raised-button color="primary" style="background-color:#5cd6d6;width:100%;height:40px"><b>LOG IN</b></button>
+                    </form>
+                    <br>
+                    <span style="text-align:center;color:#526cd0;cursor:pointer" (click)="forgetPassword=true;loginForm.reset()">Forget Password</span>
+    </mat-tab>
+
+
+                    <mat-tab label="Recover" *ngIf="forgetPassword"><br><br><br>
+                        
+                         <form [formGroup]="loginForm" #logForm=ngForm (submit)="loginForm.controls.email.valid&&forget_Password();logForm.submitted=false">
+                          
+                                        <mat-form-field style="width:100%">
+                                         <input autofocus matInput placeholder="Enter your email" formControlName="email" required>
+                                         
+                                         <mat-error *ngIf="loginForm.controls.email.invalid">{{authenticateEmail(loginForm.controls.email)}}</mat-error>
+                                       </mat-form-field><br>
+                                       <br>
+                                       <button mat-raised-button color="primary" style="background-color:#5cd6d6;width:100%;height:40px"><b>SUBMIT</b></button>
+                                     </form> 
+                                     <br>
+                                     <span style="text-align:center;color:#526cd0;cursor:pointer" (click)="forgetPassword=false;loginForm.reset()">Login</span>
+                    </mat-tab>
+                     
+
+
+                      <mat-tab label="REGISTER" (click)="logForm.reset()"><br><br>
+
+                       
+                        <mat-card-subtitle>EASILY USING</mat-card-subtitle>
+                        <button mat-button style="border:1px solid #526cd0;border-radius:4px;background-color:white;width:160px;margin-top:5px"><i class="fa fa-facebook-square" style="font-size:30px;color:#3B5998;margin-right:20px"></i> FACEBOOK</button>
+                        <button mat-button style="border:1px solid #526cd0;border-radius:4px;background-color:white;width:160px;margin-top:5px"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Google-favicon-2015.png/150px-Google-favicon-2015.png" style="width:25px;height:25px;margin-right:30px"> GOOGLE</button>
+                        <br><br>
+                        <mat-card-subtitle>-OR USING EMAIL-</mat-card-subtitle>
+                        
+                        <form  [formGroup]="registrationForm" #regForm=ngForm  (submit)="regForm.valid&&register()">
+                                
+                            
+                            <mat-form-field style="width:100%">
+                                        <input formControlName="name" matInput placeholder="Name" required>
+                                        <mat-error *ngIf="registrationForm.controls.name.invalid">{{authenticateName(registrationForm.controls.name)}}</mat-error>
+                                    </mat-form-field><br>
+
+
+                          <mat-form-field style="width:100%">
+                              <input formControlName="registrationId" matInput placeholder="Your Email Address" required>
+                              <mat-error *ngIf="registrationForm.controls.registrationId.invalid">{{authenticateEmail(registrationForm.controls.registrationId)}}</mat-error>
+                          </mat-form-field><br>
+
+
+                          <mat-form-field style="width:100%">
+                              <input formControlName="registrationPassword" matInput placeholder="Choose Password" required>
+                              <mat-error *ngIf="registrationForm.controls.registrationPassword.invalid">{{authenticatePassword(registrationForm.controls.registrationPassword)}}</mat-error>
+                          </mat-form-field><br>
+
+
+                          <mat-form-field style="width:100%">
+                            <input formControlName="mobile" matInput placeholder="Your Mobile" required>
+                            <mat-error *ngIf="registrationForm.controls.mobile.invalid">{{registrationForm.get('mobile').errors.pattern?'Invalid Mobile Number':registrationForm.get('mobile').errors.required?' Mobile Number is required':''}}</mat-error>
+                        </mat-form-field><br>
+                       
+                          <mat-radio-group formControlName="gender">
+                              <mat-radio-button value="Male">Male</mat-radio-button>
+                              <mat-radio-button value="Female">Female</mat-radio-button>
+                              <mat-error *ngIf="registrationForm.controls.gender.invalid&&(registrationForm.controls.gender.dirty||registrationForm.controls.gender.touched||regForm.submitted)">Select a gender</mat-error>
+                          </mat-radio-group>
+                        
+                        <br>
+                          <button mat-raised-button type="submit" color="primary" style="background-color:#5cd6d6;width:100%;height:40px"><b>SIGN UP</b></button>
+                </form>
+      </mat-tab>
+    </mat-tab-group>
+  
+    
+    </mat-card>
+</div>
+    <app-footer></app-footer>

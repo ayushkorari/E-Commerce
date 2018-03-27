@@ -1,0 +1,105 @@
+<div id="snackbar"></div>
+<div class="container-fluid" *ngIf="products.length<=0" style="min-height:500px">
+  <div style="color:#526cd0;margin:auto;top:30%;left:40%;position:fixed"> <h4> <button mat-mini-fab style="color:#526cd0;border:1px solid #526cd0;background-color:white"><mat-icon>shopping_cart</mat-icon></button> Your Cart Is Empty.</h4> 
+    <button mat-button  style="border:1px solid #526cd0;margin:auto;width:100%;color:#526cd0;background-color:white">Add Item From Wishlist</button>
+  </div>
+</div>                                                                                
+  <div class="container-fluid" *ngIf="products.length>0">
+      <div class="row" style="padding-top:50px;padding-bottom:50px">
+      <div class="col-sm-9">
+      <div class="table-responsive container">
+          <div class="alert alert-info alert-dismissible" *ngIf="someProductsUnavailable">
+              <a  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              Some Products in your cart are unavailable . So those will not be added in your checkout . You can try to change size or quantity of those products .
+            </div>
+          
+        <table class="table" style="border:none;margin:auto;width:80%">
+          <thead>
+            <tr>
+              
+              
+             
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products;let i = index">
+              
+              <td style="max-height:150px;max-width:150px"><div style="position: relative;text-align: center;color:black"><div class="centered" *ngIf="!product.available_products">OUT OF STOCK</div><img src="http://localhost:3000/{{product.product_info.image}}" style="max-width:150px;max-height:150px" [style.opacity]="product.available_products?1:0.3"></div></td>
+              <td>
+                  
+                  <dl>
+                      <dt><a [routerLink]="product.cart|productRoute" style="color:#535766">{{product.product_info.brand}} {{product.product_info.name}}</a></dt>
+                      <dd style="font-size:12px">Size : {{product.cart.size}} , Qty : {{product.cart.quantity}}</dd>
+                      <dd><mat-form-field>
+                          <mat-select placeholder="Size" [(ngModel)]="product.cart.size" (change)="updateCartProducts(product,'size',i)">
+                            <mat-option *ngFor="let size of product.product_info.size_quantity" [value]="size.size" [disabled]="size.quantity<product.cart.quantity">
+                              {{size.size}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="Quantity" [(ngModel)]="product.cart.quantity" (change)="updateCartProducts(product,'quantity',i)">
+                              <mat-option *ngFor="let quantity of productQuantities|filterQuantity:product.product_info.size_quantity:product.cart.size" [value]="quantity">
+                                {{quantity}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                      </dd>
+                      <dd style="font-size:16px"> 
+                        <span class="price"> Rs. {{product.product_info.price*product.cart.quantity}} </span>
+                        <span class="discount"> ({{product.product_info.discount_percent}}% off)</span>
+                        <br><strong class="product-price">Rs. {{(product.product_info.price*(100-product.product_info.discount_percent)/100)*product.cart.quantity}} </strong></dd>
+                  </dl>
+                  <hr>
+                  <button mat-raised-button  style="width:150px;color:white;background-color:#535766" (click)="removeCartProducts(product,'remove',i)">Remove</button>
+                  <button mat-raised-button  style="width:150px;color:white;background-color:#20bd99;margin-top:10px" (click)="removeCartProducts(product,'wishlist',i)">Move To Wishlist</button>
+              </td>
+              
+            </tr>
+            <tr>
+                <td colspan="2"><button mat-button  style="border:1px solid #526cd0;margin:auto;width:100%;color:#526cd0;background-color:white">Add Item From Wishlist</button>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-3 order-info" *ngIf="products.length>0">
+        <dl style="width:70%;margin:auto">
+          <dd style="height:50px">
+       
+    <button (click)="applyCoupon()" style="width:100%;color:#526cd0;background-color:white;border:1px solid #526cd0;height:40px;border-radius:2px;cursor:pointer">
+      <b style="padding:0px">Apply Coupon</b></button>
+    </dd>
+      
+      
+        <dt>
+          Price Details
+        </dt>
+        <hr>
+        <dd style="font-size:14px">
+          <span style="float:left">Total Amount</span><span style="float:right">Rs. {{totalAmount}}</span>
+          <br>
+        </dd>
+        <dd style="font-size:14px">
+            <span style="float:left">Discount</span><span style="float:right" class="discount">- Rs. {{totalDiscount}}</span>
+            <br></dd>
+          <dd style="font-size:14px">
+              <span style="float:left">Coupon Discount</span><span style="float:right" class="discount">- Rs. {{couponDiscount}}</span>
+              <br></dd>
+            <dd style="font-size:14px">
+                <span style="float:left">Delivery</span><span style="float:right" class="discount">- FREE</span>
+              <br></dd>
+              <hr>
+              <dt>
+                  <span style="float:left">Order Total</span><span style="float:right">Rs. {{totalAmount-totalDiscount-couponDiscount}}</span>
+                </dt>
+      </dl>
+    </div>
+    
+    
+    </div>
+    </div>
+    
+    <app-footer></app-footer>
+    

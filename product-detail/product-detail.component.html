@@ -1,0 +1,89 @@
+<body>
+  <div style="min-height:600px">
+    <div id="snackbar"></div>
+    <div class="container" *ngIf="product">
+      
+      <div class="container-fluid" style="min-height:300px">
+        <h1 *ngIf="!error" style="text-align:center;margin-top:100px">No Product Found</h1>
+        <div class="row" *ngIf="error">
+          <div class="col-lg-6">
+      
+          <div class="table-responsive">
+        <table class="table">
+         
+          <tbody>
+            <tr>
+              <td  style="width:20%"><ul style="list-style-type:none;padding:0px;float:left">
+          <li *ngFor="let image of product.images;let i=index">
+          <img src="http://localhost:3000/{{image}}"  (mouseover)="selectedImage=i" style="margin-top:10px;width:70%;height:70%" [style.border]="selectedImage==i ? '1px solid #20bd99' : 'none'">
+          </li>
+          
+          </ul></td>
+              <td style="width:80%">
+               
+            <div style="float:right;height:100%;width:100%">   
+            <img src="http://localhost:3000/{{product.images[selectedImage]}}" style="width:100%;height:100%" alt="" />
+          </div>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+                
+          <div class="col-lg-6 product-details"><div>
+           <h1 class="product-title">{{product.brand}} {{product.name}}</h1>
+           <span class="price"> Rs. {{product.price}} </span><span class="discount"> ({{product.discount_percent}}% off)</span>
+           <br><strong class="product-price">Rs. {{product.price*(100-product.discount_percent)/100}} </strong>
+           <br><span class="product-vatInfo">Additional tax may apply; charged at checkout</span>
+           <hr>
+           <dl>
+              <dt>Free Shipping</dt>
+              <dd>On orders of Rs. 2000 or above</dd>
+              <dt>Check Delievery</dt>
+              <dd><form class="form-inline" action="/action_page.php">
+                <mat-form-field  style="width:350px">
+                  <input matInput placeholder="Enter Pin">
+                </mat-form-field>
+        </form></dd>
+              
+            </dl> 
+
+            <hr>
+            <dl>
+                <dt>SELECT SIZE</dt>
+                <dd style="max-width:400px"><div id="size-menu"><span style="color:red" *ngIf="sizeError&&!selectedSize">Select a size <br></span><button  *ngFor="let size of product.size_quantity;let i=index" mat-mini-fab class="size-button" (click)="selectedSize=i" [style.background-color]="selectedSize==i?'#20bd99':'white'"  [style.color]="selectedSize==i?'white':''">{{size.size}}</button></div></dd>
+            </dl>
+            <br>
+            <button mat-raised-button  style="width:150px;color:white;background-color:#535766" (click)="saveToWishlist()">SAVE</button>
+            <button mat-raised-button  style="width:150px;color:white;background-color:#20bd99" (click)="addToBag()">ADD TO BAG</button>
+            <hr>
+            <dl>
+                <dt>Product Details</dt>
+                <dd style="font-size:14px">{{product.description}}</dd>
+            </dl>
+            <dl>
+                <dt>Material Details and Precautions</dt>
+                <dd style="font-size:13px;margin-bottom:0px" *ngFor="let mat of product.material_precautions">{{mat}}</dd>
+            </dl>
+            <ul style="list-style-type:none;padding-left:0px;color:gray;font-size:13px;margin-bottom:20px">
+              <li>
+                  100% Original Products
+              </li>
+              <li>
+                  Cash on delivery might be available
+              </li>
+              <li>
+                  Easy 30 days returns & 30 days exchanges
+              </li>
+            </ul>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <app-footer></app-footer>
+    
+    </body>
